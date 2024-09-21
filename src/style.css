@@ -3,7 +3,7 @@
 :root {
   --bg-color: #0b131e;
   --content-bg-color: #202b3b;
-  --text-color: #f0f1f1;
+  --text-color: #dde0e4;
   font-size: 16px;
 }
 
@@ -14,12 +14,16 @@ body {
   margin: 20px;
   padding: 0;
   box-sizing: border-box;
-  height: 100vh;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
 }
 
 .sidebar {
   width: 100px;
-  height: calc(100vh - 40px);
+  min-height: calc(100vh - 40px);
   border-radius: 16px;
   align-items: center;
   background-color: var(--content-bg-color);
@@ -33,10 +37,10 @@ body {
   margin-bottom: auto;
 }
 
-.weather-container,
-.cities-container,
-.map-container,
-.settings-container {
+.weather-box,
+.cities-box,
+.map-box,
+.settings-box {
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -52,4 +56,47 @@ body {
 .main {
   display: flex;
   flex-direction: column;
+  gap: 20px;
+  flex: 1;
+}
+
+.weather-container {
+  background-color: #74c0fc;
+}
+
+.search-bar-input {
+  width: 900px;
+  height: 50px;
+  line-height: 1.2rem;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  background-color: var(--content-bg-color);
+  color: var(--text-color);
+  padding: 0 20px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.search-bar-input::placeholder {
+  color: var(--text-color);
+  font-size: 0.9rem;
+  font-weight: 300;
+}
+
+.weather-container {
+  display: flex;
+  gap: 20px;
+  background-color: var(--bg-color);
+}
+
+.weather-container-left {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.weather-container-right {
+  width: 100%;
+  height: 600px;
 }

@@ -2,61 +2,61 @@ export default function CreateSidebar() {
   const sidebar = document.createElement('aside');
   sidebar.classList.add('sidebar');
 
-  const umbrellaContainer = document.createElement('div');
-  umbrellaContainer.classList.add('umbrella-container');
-  sidebar.appendChild(umbrellaContainer);
+  const umbrellaBox = document.createElement('div');
+  umbrellaBox.classList.add('umbrella-box');
+  sidebar.appendChild(umbrellaBox);
 
   const umbrellaIcon = document.createElement('i');
   umbrellaIcon.classList.add('fa-solid', 'fa-umbrella', 'fa-xl');
-  umbrellaContainer.appendChild(umbrellaIcon);
+  umbrellaBox.appendChild(umbrellaIcon);
 
-  const weatherContainer = document.createElement('div');
-  weatherContainer.classList.add('weather-container');
-  sidebar.appendChild(weatherContainer);
+  const weatherBox = document.createElement('div');
+  weatherBox.classList.add('weather-box');
+  sidebar.appendChild(weatherBox);
 
   const weatherIcon = document.createElement('i');
   weatherIcon.classList.add('fa-solid', 'fa-cloud-rain', 'fa-lg');
-  weatherContainer.appendChild(weatherIcon);
+  weatherBox.appendChild(weatherIcon);
 
   const weatherTitle = document.createElement('p');
   weatherTitle.textContent = 'Weather';
-  weatherContainer.appendChild(weatherTitle);
+  weatherBox.appendChild(weatherTitle);
 
-  const citiesContainer = document.createElement('div');
-  citiesContainer.classList.add('cities-container');
-  sidebar.appendChild(citiesContainer);
+  const citiesBox = document.createElement('div');
+  citiesBox.classList.add('cities-box');
+  sidebar.appendChild(citiesBox);
 
   const citisIcon = document.createElement('i');
   citisIcon.classList.add('fa-solid', 'fa-city', 'fa-lg');
-  citiesContainer.appendChild(citisIcon);
+  citiesBox.appendChild(citisIcon);
 
   const citiesTitle = document.createElement('p');
   citiesTitle.textContent = 'Cities';
-  citiesContainer.appendChild(citiesTitle);
+  citiesBox.appendChild(citiesTitle);
 
-  const mapContainer = document.createElement('div');
-  mapContainer.classList.add('map-container');
-  sidebar.appendChild(mapContainer);
+  const mapBox = document.createElement('div');
+  mapBox.classList.add('map-box');
+  sidebar.appendChild(mapBox);
 
   const mapIcon = document.createElement('i');
   mapIcon.classList.add('fa-solid', 'fa-location-dot', 'fa-lg');
-  mapContainer.appendChild(mapIcon);
+  mapBox.appendChild(mapIcon);
 
   const mapTitle = document.createElement('p');
   mapTitle.textContent = 'Map';
-  mapContainer.appendChild(mapTitle);
+  mapBox.appendChild(mapTitle);
 
-  const settingsContainer = document.createElement('div');
-  settingsContainer.classList.add('settings-container');
-  sidebar.appendChild(settingsContainer);
+  const settingsBox = document.createElement('div');
+  settingsBox.classList.add('settings-box');
+  sidebar.appendChild(settingsBox);
 
   const settingsIcon = document.createElement('i');
   settingsIcon.classList.add('fa-solid', 'fa-gear', 'fa-lg');
-  settingsContainer.appendChild(settingsIcon);
+  settingsBox.appendChild(settingsIcon);
 
   const settingsTitle = document.createElement('p');
   settingsTitle.textContent = 'Settings';
-  settingsContainer.appendChild(settingsTitle);
+  settingsBox.appendChild(settingsTitle);
 
   return sidebar;
 }
