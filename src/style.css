@@ -31,8 +31,7 @@ body {
 
 .sidebar {
   width: 100px;
-  height: 500px;
-  min-height: calc(100vh - 40px);
+  height: calc(100vh - 40px);
   border-radius: 16px;
   align-items: center;
   background-color: var(--content-bg-color);
@@ -93,12 +92,13 @@ body {
   display: flex;
   gap: 40px;
   background-color: var(--bg-color);
+  height: calc(100vh - 110px);
 }
 
 .weather-container-left {
   flex: 1 1 60%;
   display: grid;
-  grid-template-rows: repeat(3, 1fr);
+  grid-template-rows: repeat(3, minmax(150px, 1fr));
   gap: 20px;
 }
 
@@ -111,7 +111,7 @@ body {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 40px;
+  padding: 0 40px;
 }
 
 .general-info-container * {
@@ -180,6 +180,7 @@ body {
 }
 
 .air-conditions {
+  margin-top: 12px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
