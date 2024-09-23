@@ -3,18 +3,21 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import CreateSidebar from './components/sidebar';
 import CreateMain from './components/main';
 import CreateSearchBar from './components/searchBar';
-import CreateWeatherContainer from './components/weather';
+import WeatherApp from './components/weather/weather';
 
 const container = document.querySelector('.container');
 
-const sidebar = CreateSidebar();
-container.appendChild(sidebar);
+container.appendChild(CreateSidebar());
 
-const searchBar = CreateSearchBar();
-container.appendChild(searchBar);
+let weatherApp = new WeatherApp();
+container.appendChild(weatherApp.weatherContainer);
 
-const weatherContainer = CreateWeatherContainer();
-container.appendChild(weatherContainer);
-
-const main = CreateMain(searchBar, weatherContainer);
+const main = CreateMain(CreateSearchBar(), weatherApp.weatherContainer);
 container.appendChild(main);
+
+const searchInput = document.querySelector('.search-bar-input');
+searchInput.addEventListener('keydown', (e) => {
+  if (e.key === 'Enter') {
+    weatherApp.processWeatherData(searchInput.value);
+  }
+});
