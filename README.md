@@ -1,4 +1,4 @@
-## THE ODIN PROJECT - PROJECT: WEAHTER APP
+## THE ODIN PROJECT - PROJECT: WEATHER APP
 
 This is a weather app with detailed weather information for a given location. The app uses the Visual Crossing Weather API to get the weather data. The app is built using HTML, CSS, and JavaScript.
 
