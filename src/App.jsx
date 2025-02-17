@@ -1,8 +1,10 @@
+import Sidebar from "./components/sidebar"
+
 function App() {
   return (
-    <>
-      <h1>Weather App</h1>
-    </>
+    <div className="p-4 w-screen h-screen">
+      <Sidebar />
+    </div>
   )
 }
 
