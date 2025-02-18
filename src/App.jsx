@@ -3,10 +3,11 @@ import Home from "./pages/Home"
 import Cities from "./pages/Cities"
 import Map from "./pages/Map"
 import Settings from "./pages/Settings"
+import WeatherProvider from "./context/Weather"
 
 function App() {
   return (
-    <div className="p-6 w-screen h-screen">
+    <WeatherProvider>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
@@ -15,7 +16,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </BrowserRouter>
-    </div>
+    </WeatherProvider>
   )
 }
 
