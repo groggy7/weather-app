@@ -6,15 +6,15 @@ import conditionsRain from "../assets/conditions_rain.svg";
 import conditionsUV from "../assets/conditions_uv.svg";
 import spinner from "../assets/loading.svg";
 
-import clearDay from "../assets/weather-icons/clear-day.png";
-import clearNight from "../assets/weather-icons/clear-night.png";
-import cloudy from "../assets/weather-icons/cloudy.png";
-import foggy from "../assets/weather-icons/foggy.png";
+import clearDay from "../assets/weather-icons/clear-day.svg";
+import clearNight from "../assets/weather-icons/clear-night.svg";
+import cloudy from "../assets/weather-icons/cloudy.svg";
+import foggy from "../assets/weather-icons/fog.svg";
 import rain from "../assets/weather-icons/rain.svg";
-import wind from "../assets/weather-icons/wind.png";
-import snow from "../assets/weather-icons/snow.png";
-import partlyCloudyDay from "../assets/weather-icons/partly-cloudy-day.png";
-import partlyCloudyNight from "../assets/weather-icons/partly-cloudy-night.png";
+import wind from "../assets/weather-icons/wind.svg";
+import snow from "../assets/weather-icons/snow.svg";
+import partlyCloudyDay from "../assets/weather-icons/partly-cloudy-day.svg";
+import partlyCloudyNight from "../assets/weather-icons/partly-cloudy-night.svg";
 
 const weatherIcons = {
   "clear-day": clearDay,
@@ -93,7 +93,7 @@ export default function Home() {
               ]
             }
             alt={weatherData?.days[0].icon}
-            className="w-40"
+            className="w-60"
           />
         </div>
         <div className="bg-[#202B3B] rounded-3xl p-8">
