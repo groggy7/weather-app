@@ -4,12 +4,14 @@ import { WeatherData } from "./types";
 type WeatherContextType = {
   weatherData: WeatherData | null;
   location: string;
+  setLocation: (location: string) => void;
   loading: boolean;
 };
 
 export const WeatherContext = React.createContext<WeatherContextType>({
   weatherData: null,
   location: "bursa",
+  setLocation: () => {},
   loading: false,
 });
 
@@ -43,7 +45,6 @@ export default function WeatherProvider({
           )}?unitGroup=metric&include=hours&key=${apiKey}&contentType=json`
         );
         const data = await res.json();
-        console.log(data);
         setLoading(false);
         setWeatherData(data);
       } catch (error) {
@@ -58,6 +59,7 @@ export default function WeatherProvider({
       value={{
         weatherData,
         location,
+        setLocation,
         loading,
       }}
     >

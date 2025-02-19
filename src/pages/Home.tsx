@@ -31,7 +31,8 @@ const weatherIcons = {
 import { WeatherContext } from "../context/Weather";
 
 export default function Home() {
-  const { weatherData, loading } = React.useContext(WeatherContext);
+  const { weatherData, loading, setLocation } =
+    React.useContext(WeatherContext);
 
   const getDayName = (addDays: number) => {
     const days = [
@@ -48,6 +49,11 @@ export default function Home() {
     futureDate.setDate(today.getDate() + addDays);
     return days[futureDate.getDay()];
   };
+
+  function handleLocationAction(formdata: FormData) {
+    const location = formdata.get("location");
+    setLocation(String(location));
+  }
 
   const weekForecast =
     weatherData?.days.map((day, i) => ({
@@ -66,11 +72,14 @@ export default function Home() {
     <div className="flex gap-6 h-full w-full text-white p-6">
       <Sidebar />
       <div className="flex-auto flex flex-col gap-6 justify-between">
-        <input
-          type="text"
-          className="bg-[#202B3B] w-full rounded-xl text-[#9197A0] h-12 p-4"
-          placeholder="Search for a city"
-        />
+        <form action={handleLocationAction}>
+          <input
+            type="text"
+            name="location"
+            className="bg-[#202B3B] w-full rounded-xl text-[#9197A0] h-12 p-4"
+            placeholder="Search for a city"
+          />
+        </form>
         <div className="flex justify-between p-8 h-64">
           <div className="flex flex-col justify-between">
             <div>
@@ -101,7 +110,7 @@ export default function Home() {
             TODAY'S FORECAST
           </h2>
           <div className="bg-[#202B3B] flex gap-4 justify-between px-6">
-            <div className="flex flex-col justify-between items-center">
+            <div className="flex flex-col justify-between items-center gap-2">
               <span className="text-[#9399a2] font-semibold">6:00 AM</span>
               <img
                 src={
@@ -112,7 +121,7 @@ export default function Home() {
                 }
                 alt={weatherData?.days[0].icon}
               />
-              <span>
+              <span className="text-2xl">
                 {Math.round(Number(weatherData?.days[0].hours[6].temp))}°C
               </span>
             </div>
@@ -260,7 +269,7 @@ export default function Home() {
                 <img
                   src={weatherIcons[day.icon as keyof typeof weatherIcons]}
                   alt={day.condition}
-                  className="w-16 h-16"
+                  className="w-12"
                 />
                 <span className="text-[#c4cad3] font-semibold">
                   {day.condition}
