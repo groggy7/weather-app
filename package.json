@@ -1,49 +1,32 @@
 {
   "name": "weather-app",
-  "version": "1.0.0",
-  "description": "The Odin Project Weather Application",
-  "main": "index.js",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "webpack serve --open --config webpack.dev.js",
-    "build": "webpack --config webpack.prod.js"
-  },
-  "prettier": {
-    "singleQuote": true,
-    "semi": true,
-    "tabWidth": 2
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/groggy7/weather-app.git"
-  },
-  "author": "Serhat Kılbaş",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/groggy7/weather-app/issues"
-  },
-  "homepage": "https://github.com/groggy7/weather-app#readme",
-  "devDependencies": {
-    "@eslint/js": "^9.10.0",
-    "css-loader": "^7.1.2",
-    "dotenv": "^16.4.5",
-    "dotenv-webpack": "^8.1.0",
-    "eslint": "^9.10.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "globals": "^15.9.0",
-    "html-webpack-plugin": "^5.6.0",
-    "prettier": "^3.3.3",
-    "style-loader": "^4.0.0",
-    "webpack": "^5.94.0",
-    "webpack-cli": "^5.1.4",
-    "webpack-dev-server": "^5.1.0",
-    "webpack-merge": "^6.0.1"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@fortawesome/fontawesome-free": "^6.6.0",
-    "css-minimizer-webpack-plugin": "^7.0.0",
-    "file-loader": "^6.2.0",
-    "terser-webpack-plugin": "^5.3.10"
+    "@tailwindcss/vite": "^4.0.6",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.5",
+    "tailwindcss": "^4.0.6"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.20.0",
+    "@types/react": "^19.0.10",
+    "@types/react-dom": "^19.0.4",
+    "@vitejs/plugin-react": "^1.3.2",
+    "eslint": "^9.20.1",
+    "eslint-plugin-react": "^7.37.4",
+    "eslint-plugin-react-hooks": "^5.1.0",
+    "eslint-plugin-react-refresh": "^0.4.19",
+    "globals": "^15.15.0",
+    "typescript": "^5.7.3",
+    "vite": "^6.1.0"
   }
 }
