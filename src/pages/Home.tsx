@@ -1,6 +1,7 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
 import { SuggestionContext } from "../context/SuggestionContext";
+import { Location } from "../context/types";
 
 import conditionsFeel from "../assets/conditions_feel.svg";
 import conditionsWind from "../assets/conditions_wind.svg";
@@ -39,6 +40,37 @@ export default function Home() {
 
   const [search, setSearch] = React.useState("");
   const [input, setInput] = React.useState("");
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+  const suggestionsRef = React.useRef(null);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!suggestions.length) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex < suggestions.length - 1 ? prevIndex + 1 : 0
+      );
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : suggestions.length - 1
+      );
+    } else if (e.key === "Enter" && selectedIndex >= 0) {
+      e.preventDefault();
+      selectSuggestion(suggestions[selectedIndex]);
+    } else if (e.key === "Escape") {
+      setSearch("");
+      setSelectedIndex(-1);
+    }
+  };
+
+  const selectSuggestion = (suggestion: Location) => {
+    setLocation(suggestion.name);
+    setInput("");
+    setSearch("");
+    setSelectedIndex(-1);
+  };
 
   React.useEffect(() => {
     searchSuggestions(search);
@@ -60,12 +92,6 @@ export default function Home() {
     return days[futureDate.getDay()];
   };
 
-  function handleLocationAction(formdata: FormData) {
-    const location = formdata.get("location");
-    setSearch("");
-    setLocation(String(location));
-  }
-
   const weekForecast =
     weatherData?.days.map((day, i) => ({
       day: i === 0 ? "Today" : getDayName(i),
@@ -83,7 +109,7 @@ export default function Home() {
     <div className="flex gap-6 h-full w-full text-white p-6">
       <Sidebar />
       <div className="flex-auto flex flex-col gap-6 justify-between">
-        <form action={handleLocationAction} className="relative">
+        <form onSubmit={(e) => e.preventDefault()} className="relative">
           <input
             type="text"
             name="location"
@@ -94,19 +120,35 @@ export default function Home() {
               setInput(e.target.value);
               setSearch(e.target.value);
             }}
+            onKeyDown={handleKeyDown}
+            aria-autocomplete="list"
+            aria-controls="suggestions-list"
+            aria-expanded={suggestions.length > 0}
+            aria-activedescendant={
+              selectedIndex >= 0 ? `suggestion-${selectedIndex}` : undefined
+            }
           />
           {suggestions.length === 0 ? null : (
-            <div className="absolute top-14 p-2 bg-gray-400 rounded-xl">
-              {suggestions.map((suggestion) => {
+            <div
+              ref={suggestionsRef}
+              id="suggestions-list"
+              role="listbox"
+              className="absolute top-14 p-2 bg-gray-400 rounded-xl w-full"
+            >
+              {suggestions.map((suggestion, index) => {
+                const isSelected = index === selectedIndex;
                 return (
                   <div
-                    key={suggestion.name}
-                    className="p-2 cursor-pointer hover:bg-gray-600"
-                    onClick={() => {
-                      setInput(suggestion.name);
-                      setSearch("");
-                      setLocation(suggestion.name);
-                    }}
+                    id={`suggestion-${index}`}
+                    key={suggestion.id}
+                    role="option"
+                    aria-selected={isSelected}
+                    className={`p-2 cursor-pointer ${
+                      isSelected
+                        ? "bg-gray-600 text-white"
+                        : "hover:bg-gray-600"
+                    }`}
+                    onClick={() => selectSuggestion(suggestion)}
                   >
                     {suggestion.name}
                   </div>
