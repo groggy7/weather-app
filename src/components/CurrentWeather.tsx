@@ -11,7 +11,7 @@ export const CurrentWeather = ({ weatherData }) => {
   const description = weatherData?.days[0].description;
 
   return (
-    <div className="flex flex-col sm:flex-row justify-between p-3 md:p-8 h-auto sm:h-64">
+    <div className="flex flex-col sm:flex-row justify-between p-3 md:p-8 h-auto sm:h-64 rounded-3xl transition-all duration-300 hover:bg-[#202B3B]">
       <div className="flex flex-col justify-between mb-4 sm:mb-0">
         <div>
           <p className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl text-[#dde0e4] font-semibold truncate">
