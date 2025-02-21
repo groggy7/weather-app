@@ -1,15 +1,16 @@
 import React from "react";
 import Sidebar from "../components/Sidebar";
+import { SuggestionContext } from "../context/SuggestionContext";
+
 import conditionsFeel from "../assets/conditions_feel.svg";
 import conditionsWind from "../assets/conditions_wind.svg";
 import conditionsRain from "../assets/conditions_rain.svg";
 import conditionsUV from "../assets/conditions_uv.svg";
 import spinner from "../assets/loading.svg";
-
 import clearDay from "../assets/weather-icons/clear-day.svg";
 import clearNight from "../assets/weather-icons/clear-night.svg";
 import cloudy from "../assets/weather-icons/cloudy.svg";
-import foggy from "../assets/weather-icons/fog.svg";
+import fog from "../assets/weather-icons/fog.svg";
 import rain from "../assets/weather-icons/rain.svg";
 import wind from "../assets/weather-icons/wind.svg";
 import snow from "../assets/weather-icons/snow.svg";
@@ -22,17 +23,26 @@ const weatherIcons = {
   "partly-cloudy-day": partlyCloudyDay,
   "partly-cloudy-night": partlyCloudyNight,
   "cloudy": cloudy,
-  "fog": foggy,
+  "fog": fog,
   "wind": wind,
   "rain": rain,
   "snow": snow,
 } as const;
 
-import { WeatherContext } from "../context/Weather";
+import { WeatherContext } from "../context/WeatherContext";
 
 export default function Home() {
   const { weatherData, loading, setLocation } =
     React.useContext(WeatherContext);
+  const { suggestions, searchSuggestions } =
+    React.useContext(SuggestionContext);
+
+  const [search, setSearch] = React.useState("");
+  const [input, setInput] = React.useState("");
+
+  React.useEffect(() => {
+    searchSuggestions(search);
+  }, [search]);
 
   const getDayName = (addDays: number) => {
     const days = [
@@ -52,6 +62,7 @@ export default function Home() {
 
   function handleLocationAction(formdata: FormData) {
     const location = formdata.get("location");
+    setSearch("");
     setLocation(String(location));
   }
 
@@ -72,13 +83,37 @@ export default function Home() {
     <div className="flex gap-6 h-full w-full text-white p-6">
       <Sidebar />
       <div className="flex-auto flex flex-col gap-6 justify-between">
-        <form action={handleLocationAction}>
+        <form action={handleLocationAction} className="relative">
           <input
             type="text"
             name="location"
+            value={input}
             className="bg-[#202B3B] w-full rounded-xl text-[#9197A0] h-12 p-4"
             placeholder="Search for a city"
+            onChange={(e) => {
+              setInput(e.target.value);
+              setSearch(e.target.value);
+            }}
           />
+          {suggestions.length === 0 ? null : (
+            <div className="absolute top-14 p-2 bg-gray-400 rounded-xl">
+              {suggestions.map((suggestion) => {
+                return (
+                  <div
+                    key={suggestion.name}
+                    className="p-2 cursor-pointer hover:bg-gray-600"
+                    onClick={() => {
+                      setInput(suggestion.name);
+                      setSearch("");
+                      setLocation(suggestion.name);
+                    }}
+                  >
+                    {suggestion.name}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </form>
         <div className="flex justify-between p-8 h-64">
           <div className="flex flex-col justify-between">
