@@ -1,5 +1,4 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
 import { SuggestionContext } from "../context/SuggestionContext";
 import { Location } from "../context/types";
 
@@ -107,14 +106,13 @@ export default function Home() {
     </div>
   ) : (
     <div className="flex gap-6 h-full w-full text-white p-6">
-      <Sidebar />
       <div className="flex-auto flex flex-col gap-6 justify-between">
         <form onSubmit={(e) => e.preventDefault()} className="relative">
           <input
             type="text"
             name="location"
             value={input}
-            className="bg-[#202B3B] w-full rounded-xl text-[#9197A0] h-12 p-4"
+            className="bg-[#202B3B] w-full rounded-xl text-[#9197A0] h-12 p-4 outline-2"
             placeholder="Search for a city"
             onChange={(e) => {
               setInput(e.target.value);
@@ -337,7 +335,7 @@ export default function Home() {
         </div>
       </div>
       <div className="text-[#9399a2] bg-[#202b3b] rounded-3xl p-8 flex flex-col gap-6 justify-between w-120 min-h-220">
-        <h3 className="text-sm">7 DAY FORECAST</h3>
+        <h3 className="text-sm font-semibold">7-DAY FORECAST</h3>
         {weekForecast.map((day, index) => (
           <React.Fragment key={index}>
             <div className="grid grid-cols-[80px_1fr_60px] items-center">
