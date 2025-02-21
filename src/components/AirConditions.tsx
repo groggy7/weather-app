@@ -6,10 +6,10 @@ import conditionsUV from "../assets/conditions_uv.svg";
 
 const ConditionItem = ({ icon, title, value, unit }) => {
   return (
-    <div className="px-8 relative">
-      <img src={icon} alt={`${title} icon`} className="absolute left-0 top-0" />
-      <h3 className="text-[#9399a2] text-xl">{title}</h3>
-      <span className="text-[#c4cad3] font-semibold text-3xl">
+    <div className="pl-8 md:pl-10 lg:pl-12 pr-2 relative">
+      <img src={icon} alt={`${title} icon`} className="absolute left-0 top-1.5 w-5 md:w-6 lg:w-auto" />
+      <h3 className="text-[#9399a2] text-base md:text-lg lg:text-xl">{title}</h3>
+      <span className="text-[#c4cad3] font-semibold text-xl md:text-2xl lg:text-3xl">
         {value} {unit}
       </span>
     </div>
@@ -45,11 +45,11 @@ export const AirConditions = ({ conditions }) => {
   ];
 
   return (
-    <div className="bg-[#202B3B] rounded-3xl p-8">
-      <h2 className="text-[#9399a2] font-semibold text-sm mb-4">
+    <div className="bg-[#202B3B] rounded-3xl p-4 md:p-8">
+      <h2 className="text-[#9399a2] font-semibold text-base md:text-lg mb-4">
         AIR CONDITIONS
       </h2>
-      <div className="grid grid-cols-2 grid-rows-2 gap-8">
+      <div className="grid grid-cols-2 gap-4 md:gap-8">
         {conditionItems.map((item) => (
           <ConditionItem
             key={item.title}

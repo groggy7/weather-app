@@ -45,14 +45,16 @@ export default function Home() {
   }
 
   return (
-    <div className="flex gap-6 h-full w-full text-white p-6 flex-wrap">
-      <div className="flex-auto flex flex-col gap-6 justify-between">
+    <div className="flex flex-wrap gap-6 h-full w-full text-white p-4 md:p-6">
+      <div className="w-full lg:min-w-[810px] lg:flex-1 flex flex-col gap-6">
         <SearchBar />
         <CurrentWeather weatherData={weatherData} />
         <TodayForecast hourlyData={weatherData?.days[0].hours} />
         <AirConditions conditions={weatherData?.days[0]} />
       </div>
-      <WeeklyForecast forecast={weekForecast} />
+      <div className="w-full lg:min-w-[400px] lg:max-w-[400px] lg:flex-shrink-0">
+        <WeeklyForecast forecast={weekForecast} />
+      </div>
     </div>
   );
 }

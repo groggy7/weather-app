@@ -3,7 +3,7 @@ import { WeatherIcons } from "./icons";
 
 const HourlyItem = ({ hour, temp, icon }) => {
   return (
-    <div className="flex flex-col justify-between items-center gap-2">
+    <div className="flex flex-col justify-between items-center gap-2 bg-[#272F3D] rounded-xl p-4">
       <span className="text-[#9399a2] font-semibold">{hour}</span>
       <img
         src={WeatherIcons[icon]}
@@ -27,19 +27,21 @@ export const TodayForecast = ({ hourlyData }) => {
   ];
 
   return (
-    <div className="bg-[#202B3B] rounded-3xl p-8">
+  <div className="bg-[#202B3B] rounded-3xl p-3 md:p-8">
       <h2 className="text-[#9399a2] font-semibold text-sm mb-4">
         TODAY'S FORECAST
       </h2>
-      <div className="bg-[#202B3B] flex gap-4 justify-between px-6">
+      <div className="bg-[#202B3B] grid grid-cols-2 md:flex gap-2 justify-between px-2">
         {timeSlots.map((slot, index) => (
           <React.Fragment key={slot.time}>
-            <HourlyItem 
-              hour={slot.time} 
-              temp={hourlyData?.[slot.index].temp} 
-              icon={hourlyData?.[slot.index].icon} 
-            />
-            {index < timeSlots.length - 1 && <Divider />}
+            <div className="md:flex-1">
+              <HourlyItem 
+                hour={slot.time} 
+                temp={hourlyData?.[slot.index].temp} 
+                icon={hourlyData?.[slot.index].icon} 
+              />
+            </div>
+            {index < timeSlots.length - 1 && <div className="hidden md:block"><Divider /></div>}
           </React.Fragment>
         ))}
       </div>
