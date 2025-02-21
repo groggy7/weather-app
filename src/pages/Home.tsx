@@ -1,15 +1,16 @@
 import React from "react";
-import Sidebar from "../components/Sidebar";
+import { SuggestionContext } from "../context/SuggestionContext";
+import { Location } from "../context/types";
+
 import conditionsFeel from "../assets/conditions_feel.svg";
 import conditionsWind from "../assets/conditions_wind.svg";
 import conditionsRain from "../assets/conditions_rain.svg";
 import conditionsUV from "../assets/conditions_uv.svg";
 import spinner from "../assets/loading.svg";
-
 import clearDay from "../assets/weather-icons/clear-day.svg";
 import clearNight from "../assets/weather-icons/clear-night.svg";
 import cloudy from "../assets/weather-icons/cloudy.svg";
-import foggy from "../assets/weather-icons/fog.svg";
+import fog from "../assets/weather-icons/fog.svg";
 import rain from "../assets/weather-icons/rain.svg";
 import wind from "../assets/weather-icons/wind.svg";
 import snow from "../assets/weather-icons/snow.svg";
@@ -22,17 +23,57 @@ const weatherIcons = {
   "partly-cloudy-day": partlyCloudyDay,
   "partly-cloudy-night": partlyCloudyNight,
   "cloudy": cloudy,
-  "fog": foggy,
+  "fog": fog,
   "wind": wind,
   "rain": rain,
   "snow": snow,
 } as const;
 
-import { WeatherContext } from "../context/Weather";
+import { WeatherContext } from "../context/WeatherContext";
 
 export default function Home() {
   const { weatherData, loading, setLocation } =
     React.useContext(WeatherContext);
+  const { suggestions, searchSuggestions } =
+    React.useContext(SuggestionContext);
+
+  const [search, setSearch] = React.useState("");
+  const [input, setInput] = React.useState("");
+  const [selectedIndex, setSelectedIndex] = React.useState(-1);
+  const suggestionsRef = React.useRef(null);
+
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (!suggestions.length) return;
+
+    if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex < suggestions.length - 1 ? prevIndex + 1 : 0
+      );
+    } else if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setSelectedIndex((prevIndex) =>
+        prevIndex > 0 ? prevIndex - 1 : suggestions.length - 1
+      );
+    } else if (e.key === "Enter" && selectedIndex >= 0) {
+      e.preventDefault();
+      selectSuggestion(suggestions[selectedIndex]);
+    } else if (e.key === "Escape") {
+      setSearch("");
+      setSelectedIndex(-1);
+    }
+  };
+
+  const selectSuggestion = (suggestion: Location) => {
+    setLocation(suggestion.name);
+    setInput("");
+    setSearch("");
+    setSelectedIndex(-1);
+  };
+
+  React.useEffect(() => {
+    searchSuggestions(search);
+  }, [search]);
 
   const getDayName = (addDays: number) => {
     const days = [
@@ -50,11 +91,6 @@ export default function Home() {
     return days[futureDate.getDay()];
   };
 
-  function handleLocationAction(formdata: FormData) {
-    const location = formdata.get("location");
-    setLocation(String(location));
-  }
-
   const weekForecast =
     weatherData?.days.map((day, i) => ({
       day: i === 0 ? "Today" : getDayName(i),
@@ -70,15 +106,54 @@ export default function Home() {
     </div>
   ) : (
     <div className="flex gap-6 h-full w-full text-white p-6">
-      <Sidebar />
       <div className="flex-auto flex flex-col gap-6 justify-between">
-        <form action={handleLocationAction}>
+        <form onSubmit={(e) => e.preventDefault()} className="relative">
           <input
             type="text"
             name="location"
-            className="bg-[#202B3B] w-full rounded-xl text-[#9197A0] h-12 p-4"
+            value={input}
+            className="bg-[#202B3B] w-full rounded-xl text-[#9197A0] h-12 p-4 outline-2"
             placeholder="Search for a city"
+            onChange={(e) => {
+              setInput(e.target.value);
+              setSearch(e.target.value);
+            }}
+            onKeyDown={handleKeyDown}
+            aria-autocomplete="list"
+            aria-controls="suggestions-list"
+            aria-expanded={suggestions.length > 0}
+            aria-activedescendant={
+              selectedIndex >= 0 ? `suggestion-${selectedIndex}` : undefined
+            }
           />
+          {suggestions.length === 0 ? null : (
+            <div
+              ref={suggestionsRef}
+              id="suggestions-list"
+              role="listbox"
+              className="absolute top-14 p-2 bg-gray-400 rounded-xl w-full"
+            >
+              {suggestions.map((suggestion, index) => {
+                const isSelected = index === selectedIndex;
+                return (
+                  <div
+                    id={`suggestion-${index}`}
+                    key={suggestion.id}
+                    role="option"
+                    aria-selected={isSelected}
+                    className={`p-2 cursor-pointer ${
+                      isSelected
+                        ? "bg-gray-600 text-white"
+                        : "hover:bg-gray-600"
+                    }`}
+                    onClick={() => selectSuggestion(suggestion)}
+                  >
+                    {suggestion.name}
+                  </div>
+                );
+              })}
+            </div>
+          )}
         </form>
         <div className="flex justify-between p-8 h-64">
           <div className="flex flex-col justify-between">
@@ -260,7 +335,7 @@ export default function Home() {
         </div>
       </div>
       <div className="text-[#9399a2] bg-[#202b3b] rounded-3xl p-8 flex flex-col gap-6 justify-between w-120 min-h-220">
-        <h3 className="text-sm">7 DAY FORECAST</h3>
+        <h3 className="text-sm font-semibold">7-DAY FORECAST</h3>
         {weekForecast.map((day, index) => (
           <React.Fragment key={index}>
             <div className="grid grid-cols-[80px_1fr_60px] items-center">

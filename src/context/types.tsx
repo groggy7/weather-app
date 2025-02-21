@@ -88,3 +88,13 @@ export interface Station {
   quality: number;
   contribution: number;
 }
+
+export interface Location {
+  id: number;
+  name: string;
+  region: string;
+  country: string;
+  lat: number;
+  lon: number;
+  url: string;
+}
